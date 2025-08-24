@@ -535,100 +535,139 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
+              <SparklesIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
+              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+                Simple 3-Step Process
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Get professional results in just a few simple steps. No design
               experience required.
             </p>
           </motion.div>
 
           {/* Headshot Generation Process */}
-          <div className="mb-20">
+          <div className="mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-16"
             >
-              <div className="inline-flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <CameraIcon className="h-5 w-5 text-white" />
+              <div className="inline-flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <CameraIcon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
                   Headshot Generation Process
                 </h3>
               </div>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Transform any selfie into a professional headshot in under 2
+                minutes
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <ArrowRightIcon className="h-8 w-8 text-white transform rotate-90" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  1. Upload Your Photo
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Drag and drop any selfie or portrait photo. Our AI works best
-                  with front-facing photos in good lighting.
-                </p>
-              </motion.div>
+            <div className="relative">
+              {/* Connection Line */}
+              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-200 dark:from-blue-700 dark:via-blue-600 dark:to-blue-700 transform -translate-y-1/2 z-0"></div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <SparklesIcon className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  2. Choose Style & Customize
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Select from 10+ professional styles and adjust background,
-                  lighting, and other details with real-time preview.
-                </p>
-              </motion.div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 relative z-10">
+                {[
+                  {
+                    step: '01',
+                    icon: CameraIcon,
+                    title: 'Upload Your Photo',
+                    description:
+                      'Drag and drop any selfie or portrait photo. Our AI works best with front-facing photos in good lighting.',
+                    color: 'from-blue-500 to-blue-600',
+                    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+                    borderColor: 'border-blue-200 dark:border-blue-700',
+                  },
+                  {
+                    step: '02',
+                    icon: SparklesIcon,
+                    title: 'Choose Style & Customize',
+                    description:
+                      'Select from 10+ professional styles and adjust background, lighting, and other details with real-time preview.',
+                    color: 'from-blue-500 to-blue-600',
+                    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+                    borderColor: 'border-blue-200 dark:border-blue-700',
+                  },
+                  {
+                    step: '03',
+                    icon: CheckIcon,
+                    title: 'Download & Use',
+                    description:
+                      'Get your professional headshot instantly. Perfect for LinkedIn, resumes, business cards, and more.',
+                    color: 'from-blue-500 to-blue-600',
+                    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+                    borderColor: 'border-blue-200 dark:border-blue-700',
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="relative group"
+                  >
+                    <Card
+                      className={`p-8 h-full text-center relative overflow-hidden border-2 ${item.bgColor} ${item.borderColor} hover:shadow-xl transition-all duration-300 group-hover:scale-105`}
+                    >
+                      {/* Step Number Badge */}
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <div
+                          className={`w-8 h-8 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center shadow-lg`}
+                        >
+                          <span className="text-sm font-bold text-white">
+                            {item.step}
+                          </span>
+                        </div>
+                      </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <ArrowRightIcon className="h-8 w-8 text-white transform -rotate-90" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  3. Download & Use
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Get your professional headshot instantly. Perfect for
-                  LinkedIn, resumes, business cards, and more.
-                </p>
-              </motion.div>
+                      {/* Icon */}
+                      <div
+                        className={`w-20 h-20 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <item.icon className="h-10 w-10 text-white" />
+                      </div>
+
+                      {/* Content */}
+                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                        {item.title}
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {item.description}
+                      </p>
+
+                      {/* Progress Indicator */}
+                      {index < 2 && (
+                        <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2">
+                          <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-4 border-blue-200 dark:border-blue-700 flex items-center justify-center shadow-lg">
+                            <ArrowRightIcon className="h-6 w-6 text-blue-500" />
+                          </div>
+                        </div>
+                      )}
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -639,77 +678,143 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-16"
             >
-              <div className="inline-flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                  <DocumentTextIcon className="h-5 w-5 text-white" />
+              <div className="inline-flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <DocumentTextIcon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
                   Resume Building Process
                 </h3>
               </div>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Create ATS-optimized resumes that get you past applicant
+                tracking systems
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <DocumentTextIcon className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  1. Choose Template
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Select from 5 ATS-friendly templates designed to get past
-                  applicant tracking systems and impress recruiters.
-                </p>
-              </motion.div>
+            <div className="relative">
+              {/* Connection Line */}
+              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-200 via-green-300 to-green-200 dark:from-green-700 dark:via-green-600 dark:to-green-700 transform -translate-y-1/2 z-0"></div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <DocumentTextIcon className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  2. Add Your Information
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Fill in your details with our guided form. Get AI-powered
-                  keyword suggestions based on your target role.
-                </p>
-              </motion.div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 relative z-10">
+                {[
+                  {
+                    step: '01',
+                    icon: DocumentTextIcon,
+                    title: 'Choose Template',
+                    description:
+                      'Select from 5 ATS-friendly templates designed to get past applicant tracking systems and impress recruiters.',
+                    color: 'from-green-500 to-green-600',
+                    bgColor: 'bg-green-50 dark:bg-green-900/20',
+                    borderColor: 'border-green-200 dark:border-green-700',
+                  },
+                  {
+                    step: '02',
+                    icon: DocumentTextIcon,
+                    title: 'Add Your Information',
+                    description:
+                      'Fill in your details with our guided form. Get AI-powered keyword suggestions based on your target role.',
+                    color: 'from-green-500 to-green-600',
+                    bgColor: 'bg-green-50 dark:bg-green-900/20',
+                    borderColor: 'border-green-200 dark:border-green-700',
+                  },
+                  {
+                    step: '03',
+                    icon: CheckIcon,
+                    title: 'Export & Apply',
+                    description:
+                      'Preview your resume and export as PDF. Your resume is ready to submit to employers and job boards.',
+                    color: 'from-green-500 to-green-600',
+                    bgColor: 'bg-green-50 dark:bg-green-900/20',
+                    borderColor: 'border-green-200 dark:border-green-700',
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="relative group"
+                  >
+                    <Card
+                      className={`p-8 h-full text-center relative overflow-hidden border-2 ${item.bgColor} ${item.borderColor} hover:shadow-xl transition-all duration-300 group-hover:scale-105`}
+                    >
+                      {/* Step Number Badge */}
+                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <div
+                          className={`w-8 h-8 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center shadow-lg`}
+                        >
+                          <span className="text-sm font-bold text-white">
+                            {item.step}
+                          </span>
+                        </div>
+                      </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <ArrowRightIcon className="h-8 w-8 text-white transform -rotate-90" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  3. Export & Apply
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Preview your resume and export as PDF. Your resume is ready to
-                  submit to employers and job boards.
-                </p>
-              </motion.div>
+                      {/* Icon */}
+                      <div
+                        className={`w-20 h-20 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <item.icon className="h-10 w-10 text-white" />
+                      </div>
+
+                      {/* Content */}
+                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                        {item.title}
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {item.description}
+                      </p>
+
+                      {/* Progress Indicator */}
+                      {index < 2 && (
+                        <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2">
+                          <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-4 border-green-200 dark:border-green-700 flex items-center justify-center shadow-lg">
+                            <ArrowRightIcon className="h-6 w-6 text-green-500" />
+                          </div>
+                        </div>
+                      )}
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* Call to Action */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-center mt-20"
+          >
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Ready to Get Started?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Join thousands of professionals who have transformed their
+                careers with ProfiAI
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/headshot">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3">
+                    <CameraIcon className="h-5 w-5 mr-2" />
+                    Try Headshot Generator
+                  </Button>
+                </Link>
+                <Link to="/resume">
+                  <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3">
+                    <DocumentTextIcon className="h-5 w-5 mr-2" />
+                    Try Resume Builder
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
