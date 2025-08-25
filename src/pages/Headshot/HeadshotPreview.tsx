@@ -31,7 +31,8 @@ export default function HeadshotPreview() {
   const steps = [
     { id: 'upload', name: t('uploadSelfie'), completed: true, current: false },
     { id: 'style', name: t('selectStyle'), completed: true, current: false },
-    { id: 'customize', name: t('customize'), completed: true, current: false },
+    // TODO: Re-enable customize step when needed
+    // { id: 'customize', name: t('customize'), completed: true, current: false },
     { id: 'download', name: t('download'), completed: false, current: true },
   ];
 

@@ -35,7 +35,8 @@ function App() {
               {/* Headshot Generator Flow */}
               <Route path="/headshot" element={<HeadshotUpload />} />
               <Route path="/headshot/style" element={<HeadshotStyle />} />
-              <Route path="/headshot/customize" element={<HeadshotCustomize />} />
+              {/* TODO: Re-enable customize step when needed */}
+              {/* <Route path="/headshot/customize" element={<HeadshotCustomize />} /> */}
               <Route path="/headshot/preview" element={<HeadshotPreview />} />
               
               {/* Resume Builder Flow */}

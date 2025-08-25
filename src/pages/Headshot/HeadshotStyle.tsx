@@ -8,14 +8,17 @@ import ProgressBar from '../../components/UI/ProgressBar';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useApp } from '../../contexts/AppContext';
 import { headshotStyles } from '../../data/mockData';
-import { HeadshotStyle } from '../../types';
+import { HeadshotStyle as HeadshotStyleType } from '../../types';
+import LoadingSpinner from '../../components/UI/LoadingSpinner';
 
-export default function HeadshotStyleSelection() {
-  const [selectedStyle, setSelectedStyle] = useState<HeadshotStyle | null>(
+export default function HeadshotStyle() {
+  const [selectedStyle, setSelectedStyle] = useState<HeadshotStyleType | null>(
     null
   );
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [showPremiumOnly, setShowPremiumOnly] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { state } = useApp();
@@ -23,7 +26,8 @@ export default function HeadshotStyleSelection() {
   const steps = [
     { id: 'upload', name: t('uploadSelfie'), completed: true, current: false },
     { id: 'style', name: t('selectStyle'), completed: false, current: true },
-    { id: 'customize', name: t('customize'), completed: false, current: false },
+    // TODO: Re-enable customize step when needed
+    // { id: 'customize', name: t('customize'), completed: false, current: false },
     { id: 'download', name: t('download'), completed: false, current: false },
   ];
 
@@ -50,7 +54,7 @@ export default function HeadshotStyleSelection() {
     }
   }, [navigate]);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (selectedStyle) {
       // Check if user is trying to use premium style with free plan
       if (selectedStyle.isPremium && state.user?.plan === 'free') {
@@ -66,8 +70,61 @@ export default function HeadshotStyleSelection() {
         return;
       }
 
+      // Store selected style for next step
       sessionStorage.setItem('headshot_style', JSON.stringify(selectedStyle));
-      navigate('/headshot/customize');
+
+      // Skip customize step for MVP - go directly to preview
+      // TODO: Re-enable customize step when needed
+      // navigate('/headshot/customize');
+
+      // For MVP: Generate headshot directly with default settings
+      const defaultSettings = {
+        background: {
+          type: 'white',
+          opacity: 1,
+          blur: 0,
+          brightness: 1,
+          contrast: 1,
+        },
+        lighting: {
+          type: 'natural',
+          intensity: 0.7,
+          temperature: 5500,
+          shadows: 0.5,
+          highlights: 0.8,
+          rimLight: false,
+          rimIntensity: 0.3,
+        },
+        effects: {
+          bokeh: false,
+          bokehIntensity: 0.5,
+          vignette: false,
+          vignetteIntensity: 0.3,
+          sharpness: 0.8,
+        },
+      };
+
+      // Store default settings and navigate to preview
+      sessionStorage.setItem(
+        'headshot_settings',
+        JSON.stringify(defaultSettings)
+      );
+
+      // Show loading state and simulate AI processing
+      setIsProcessing(true);
+
+      try {
+        // Simulate AI processing time
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        // Navigate to preview after processing
+        navigate('/headshot/preview');
+      } catch (error) {
+        console.error('Processing failed:', error);
+        alert('Failed to process image. Please try again.');
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 
@@ -84,7 +141,23 @@ export default function HeadshotStyleSelection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative"
         >
+          {/* Loading Overlay */}
+          {isProcessing && (
+            <div className="absolute inset-0 bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center z-50 rounded-lg">
+              <div className="text-center">
+                <LoadingSpinner
+                  showLogo
+                  message="Processing your headshot..."
+                />
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  This may take a few moments...
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
               Choose Your Professional Style
@@ -279,10 +352,10 @@ export default function HeadshotStyleSelection() {
             </Button>
             <Button
               onClick={handleContinue}
-              disabled={!selectedStyle}
+              disabled={!selectedStyle || isProcessing}
               size="lg"
             >
-              {t('continue')}
+              {isProcessing ? 'Processing...' : t('continue')}
             </Button>
           </div>
         </motion.div>
