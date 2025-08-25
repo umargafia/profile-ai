@@ -272,11 +272,55 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
           {/* Main Content Area */}
           <div className="xl:col-span-3 space-y-8">
-            {/* Usage Overview Cards */}
+            {/* Quick Actions */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Quick Actions
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {quickActions.map((action, index) => (
+                  <motion.div
+                    key={action.title}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link to={action.link}>
+                      <Card className="p-8 text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 cursor-pointer group">
+                        <div
+                          className={`w-20 h-20 bg-gradient-to-r ${action.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <action.icon className="h-10 w-10 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                          {action.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                          {action.description}
+                        </p>
+                        <div className="inline-flex items-center px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {action.stats}
+                          </span>
+                        </div>
+                      </Card>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Usage Overview Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -296,7 +340,7 @@ export default function Dashboard() {
                     key={stat.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   >
                     <Card
                       className={`p-6 border-2 ${stat.borderColor} ${stat.bgColor} hover:shadow-lg transition-all duration-300`}
@@ -343,7 +387,7 @@ export default function Dashboard() {
                             <span className="text-gray-600 dark:text-gray-400">
                               Progress
                             </span>
-                            <span className="font-medium text-gray-900 dark:text-white">
+                            <span className="text-gray-900 dark:text-white">
                               {stat.percentage}%
                             </span>
                           </div>
@@ -375,50 +419,6 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Quick Actions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Quick Actions
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {quickActions.map((action, index) => (
-                  <motion.div
-                    key={action.title}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Link to={action.link}>
-                      <Card className="p-8 text-center hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 cursor-pointer group">
-                        <div
-                          className={`w-20 h-20 bg-gradient-to-r ${action.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                        >
-                          <action.icon className="h-10 w-10 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                          {action.title}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-                          {action.description}
-                        </p>
-                        <div className="inline-flex items-center px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            {action.stats}
-                          </span>
-                        </div>
-                      </Card>
-                    </Link>
                   </motion.div>
                 ))}
               </div>
