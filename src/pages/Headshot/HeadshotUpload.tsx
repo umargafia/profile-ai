@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  CloudArrowUpIcon, 
+import {
+  CloudArrowUpIcon,
   PhotoIcon,
   InformationCircleIcon,
   ShieldCheckIcon,
-  ClockIcon
+  ClockIcon,
 } from '@heroicons/react/24/outline';
 import Button from '../../components/UI/Button';
 import Card from '../../components/UI/Card';
@@ -20,6 +20,9 @@ export default function HeadshotUpload() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const changePhotoRef = useRef<HTMLInputElement>(null);
 
   const steps = [
     { id: 'upload', name: t('uploadSelfie'), completed: false, current: true },
@@ -47,7 +50,7 @@ export default function HeadshotUpload() {
 
     setError('');
     setSelectedFile(file);
-    
+
     const reader = new FileReader();
     reader.onload = (e) => {
       setPreview(e.target?.result as string);
@@ -55,15 +58,18 @@ export default function HeadshotUpload() {
     reader.readAsDataURL(file);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragOver(false);
+
+      const files = Array.from(e.dataTransfer.files);
+      if (files.length > 0) {
+        handleFileSelect(files[0]);
+      }
+    },
+    [handleFileSelect]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -77,8 +83,11 @@ export default function HeadshotUpload() {
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    console.log('File input change:', files); // Debug log
     if (files && files.length > 0) {
       handleFileSelect(files[0]);
+      // Reset the input value to allow selecting the same file again
+      e.target.value = '';
     }
   };
 
@@ -121,7 +130,7 @@ export default function HeadshotUpload() {
 
                 {/* Upload Zone */}
                 <div
-                  className={`relative border-2 border-dashed rounded-lg p-12 text-center transition-all duration-200 ${
+                  className={`relative border-2 border-dashed rounded-lg p-12 text-center transition-all duration-200 cursor-pointer group ${
                     isDragOver
                       ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20'
                       : selectedFile
@@ -131,6 +140,12 @@ export default function HeadshotUpload() {
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
+                  onClick={() => {
+                    if (!selectedFile) {
+                      console.log('Upload zone clicked'); // Debug log
+                      fileInputRef.current?.click();
+                    }
+                  }}
                 >
                   {preview ? (
                     <div className="space-y-4">
@@ -150,22 +165,30 @@ export default function HeadshotUpload() {
                         >
                           Remove
                         </Button>
-                        <label className="cursor-pointer">
-                          <Button variant="ghost">
-                            Change Photo
-                          </Button>
+                        <div className="relative">
                           <input
+                            ref={changePhotoRef}
                             type="file"
+                            id="change-photo"
                             className="hidden"
                             accept="image/jpeg,image/jpg,image/png"
                             onChange={handleFileInput}
                           />
-                        </label>
+                          <Button
+                            variant="ghost"
+                            onClick={() => {
+                              console.log('Change photo button clicked'); // Debug log
+                              changePhotoRef.current?.click();
+                            }}
+                          >
+                            Change Photo
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <CloudArrowUpIcon className="mx-auto h-16 w-16 text-gray-400" />
+                      <CloudArrowUpIcon className="mx-auto h-16 w-16 text-gray-400 group-hover:text-teal-500 transition-colors" />
                       <div>
                         <p className="text-lg font-medium text-gray-900 dark:text-white">
                           {t('dragDropText')}
@@ -173,26 +196,39 @@ export default function HeadshotUpload() {
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                           {t('fileRequirements')}
                         </p>
+                        <p className="text-xs text-teal-600 dark:text-teal-400 font-medium">
+                          Click anywhere in this area to browse files
+                        </p>
                       </div>
-                      <label className="cursor-pointer">
-                        <Button>
-                          <PhotoIcon className="h-5 w-5 mr-2" />
-                          Browse Files
-                        </Button>
+                      <div className="relative">
                         <input
+                          ref={fileInputRef}
                           type="file"
+                          id="file-upload"
                           className="hidden"
                           accept="image/jpeg,image/jpg,image/png"
                           onChange={handleFileInput}
                         />
-                      </label>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent triggering upload zone click
+                            console.log('Browse button clicked'); // Debug log
+                            fileInputRef.current?.click();
+                          }}
+                        >
+                          <PhotoIcon className="h-5 w-5 mr-2" />
+                          Browse Files
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
 
                 {error && (
                   <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                    <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+                    <p className="text-sm text-red-600 dark:text-red-400">
+                      {error}
+                    </p>
                   </div>
                 )}
 
@@ -202,7 +238,8 @@ export default function HeadshotUpload() {
                     <ShieldCheckIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
                     <div>
                       <p className="text-sm text-blue-800 dark:text-blue-200">
-                        <strong>{t('secureUpload')}</strong> - {t('privacyNotice')}
+                        <strong>{t('secureUpload')}</strong> -{' '}
+                        {t('privacyNotice')}
                       </p>
                       <p className="text-xs text-blue-600 dark:text-blue-300 mt-1">
                         {t('dataEncrypted')}
@@ -239,7 +276,7 @@ export default function HeadshotUpload() {
                     {t('tipsTitle')}
                   </h3>
                 </div>
-                
+
                 <div className="space-y-4">
                   {tips.map((tip, index) => (
                     <div key={index} className="flex items-start space-x-3">
@@ -263,7 +300,9 @@ export default function HeadshotUpload() {
                         alt="Good example"
                         className="w-full h-20 object-cover rounded-md"
                       />
-                      <p className="text-xs text-green-600 dark:text-green-400 mt-1">✓ Good</p>
+                      <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                        ✓ Good
+                      </p>
                     </div>
                     <div className="text-center">
                       <img
@@ -271,7 +310,9 @@ export default function HeadshotUpload() {
                         alt="Poor example"
                         className="w-full h-20 object-cover rounded-md grayscale"
                       />
-                      <p className="text-xs text-red-600 dark:text-red-400 mt-1">✗ Avoid</p>
+                      <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+                        ✗ Avoid
+                      </p>
                     </div>
                   </div>
                 </div>
